@@ -131,7 +131,7 @@ async def clear(ctx, amount: int):
         print(f'Error clearing messages: {e}')
         await ctx.send('❌ There was an error trying to delete messages!')
 
-if __name__ == '__main__':
+if __name__ == '__bot__':
     keep_alive()
     
     token = os.getenv('DISCORD_TOKEN')

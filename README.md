@@ -1,6 +1,6 @@
-# Discord Bot
+# Discord Bot (Python)
 
-Discord ボット - Python (discord.py) で作成されています。Replitで動作するように設計されています。
+Discord ボット - Python (discord.py) で作成されています。
 
 ## 機能
 
@@ -9,11 +9,33 @@ Discord ボット - Python (discord.py) で作成されています。Replitで�
 - **サーバー情報** - サーバーの詳細統計を表示
 - **ユーザー情報** - ユーザーの情報を表示
 - **メッセージ削除** - メッセージの一括削除（権限が必要）
-- **Keep-Aliveサーバー** - Replitでボットを稼働し続けるHTTPサーバー
+- **Keep-Aliveサーバー** - Flask経由でボットを稼働し続けるHTTPサーバー
 
 ## セットアップ手順
 
-### 1. Discord ボットを作成
+### 1. 依存関係のインストール
+
+```bash
+pip install -r requirements.txt
+```
+
+または、`uv`を使用している場合：
+
+```bash
+uv sync
+```
+
+### 2. 環境変数の設定
+
+`.env`ファイルを作成して、以下の内容を追加してください：
+
+```env
+DISCORD_TOKEN=your_bot_token_here
+PREFIX=!
+PORT=5000
+```
+
+### 3. Discord ボットを作成
 
 1. [Discord Developer Portal](https://discord.com/developers/applications) にアクセス
 2. "New Application" をクリックして名前を入力
@@ -23,15 +45,7 @@ Discord ボット - Python (discord.py) で作成されています。Replitで�
    - Server Members Intent
    - Message Content Intent
 
-### 2. Replitにボットトークンを追加
-
-1. Replitプロジェクトで "Tools" サイドバーを開く
-2. "Secrets" をクリック
-3. 新しいシークレットを追加：
-   - キー: `DISCORD_TOKEN`
-   - 値: コピーしたボットトークンを貼り付け
-
-### 3. ボットをサーバーに招待
+### 4. ボットをサーバーに招待
 
 1. Discord Developer Portal で "OAuth2" > "URL Generator" に移動
 2. スコープを選択：
@@ -44,9 +58,17 @@ Discord ボット - Python (discord.py) で作成されています。Replitで�
 4. 生成されたURLをコピーしてブラウザで開く
 5. サーバーを選択してボットを認証
 
-### 4. ボットを実行
+### 5. ボットを実行
 
-Replitの "Run" ボタンをクリック。ボットが起動してDiscordに接続します！
+```bash
+python bot.py
+```
+
+または、`uv`を使用している場合：
+
+```bash
+uv run bot.py
+```
 
 ## 利用可能なコマンド
 
@@ -62,11 +84,11 @@ Replitの "Run" ボタンをクリック。ボットが起動してDiscordに接
 
 ### コマンドプレフィックスの変更
 
-Replit Secrets に `PREFIX` を追加して、お好みのプレフィックスを設定（デフォルトは `!`）
+`.env`ファイルの`PREFIX`を変更して、お好みのプレフィックスを設定（デフォルトは`!`）
 
 ### 新しいコマンドの追加
 
-1. `main.py` にコマンド関数を追加
+1. `bot.py` にコマンド関数を追加
 2. 次のテンプレートに従ってください：
 
 ```python
@@ -78,26 +100,23 @@ async def コマンド名(ctx):
 
 3. ボットを再起動すると、コマンドが自動的に読み込まれます！
 
-## Replitでのデプロイ
+## プロジェクト構成
 
-このボットは、組み込みのHTTPサーバーによりReplitでオンラインを維持するように設定されています。ボットがクラッシュしても自動的に再起動し、接続を維持します。
-
-## GitHubへのプッシュ
-
-プロジェクトをGitHubにプッシュするには：
-
-1. Replitからプロジェクトをダウンロード（三点メニュー → Download as zip）
-2. ファイルを展開
-3. ターミナルでフォルダを開いて実行：
-
-```bash
-git init
-git add .
-git commit -m "Initial Discord bot setup"
-git remote add origin https://github.com/あなたのユーザー名/リポジトリ名.git
-git branch -M main
-git push -u origin main
 ```
+cafe_book_tmp/
+├── bot.py           # メインのボットファイル
+├── keep_alive.py     # Keep-aliveサーバー
+├── pyproject.toml    # 依存関係管理
+├── uv.lock          # 依存関係のロックファイル
+├── .env             # 環境変数（作成が必要）
+└── README.md        # このファイル
+```
+
+## 依存関係
+
+- `discord.py>=2.6.4` - Discord Bot API
+- `flask>=3.1.2` - Keep-aliveサーバー
+- `python-dotenv>=1.2.1` - 環境変数管理
 
 ## サポート
 
