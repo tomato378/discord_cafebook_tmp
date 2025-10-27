@@ -1,5 +1,11 @@
-node_modules/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
 .env
+.pythonlibs/
+venv/
+env/
 *.log
 .DS_Store
 .replit

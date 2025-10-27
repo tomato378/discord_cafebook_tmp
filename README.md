@@ -1,98 +1,108 @@
 # Discord Bot
 
-A feature-rich Discord bot built with discord.js, designed to run on Replit with keep-alive functionality.
+Discord ボット - Python (discord.py) で作成されています。Replitで動作するように設計されています。
 
-## Features
+## 機能
 
-- **Ping Command** - Check bot latency and response time
-- **Help Command** - List all available commands
-- **Server Info** - Display detailed server statistics
-- **User Info** - Show information about users
-- **Clear Messages** - Bulk delete messages (requires permissions)
-- **Command Handler System** - Easily add new commands
-- **Keep-Alive Server** - HTTP server to maintain uptime on Replit
+- **Pingコマンド** - ボットの応答時間を確認
+- **Helpコマンド** - 利用可能なコマンド一覧を表示
+- **サーバー情報** - サーバーの詳細統計を表示
+- **ユーザー情報** - ユーザーの情報を表示
+- **メッセージ削除** - メッセージの一括削除（権限が必要）
+- **Keep-Aliveサーバー** - Replitでボットを稼働し続けるHTTPサーバー
 
-## Setup Instructions
+## セットアップ手順
 
-### 1. Create a Discord Bot
+### 1. Discord ボットを作成
 
-1. Go to the [Discord Developer Portal](https://discord.com/developers/applications)
-2. Click "New Application" and give it a name
-3. Go to the "Bot" tab and click "Add Bot"
-4. Under the bot's username, click "Reset Token" and copy your bot token
-5. Enable these Privileged Gateway Intents:
+1. [Discord Developer Portal](https://discord.com/developers/applications) にアクセス
+2. "New Application" をクリックして名前を入力
+3. "Bot" タブに移動して "Add Bot" をクリック
+4. ボットのユーザー名の下にある "Reset Token" をクリックしてトークンをコピー
+5. 以下の Privileged Gateway Intents を有効にする：
    - Server Members Intent
    - Message Content Intent
 
-### 2. Add Bot Token to Replit
+### 2. Replitにボットトークンを追加
 
-1. In your Replit project, go to the "Tools" sidebar
-2. Click on "Secrets" 
-3. Add a new secret:
-   - Key: `DISCORD_TOKEN`
-   - Value: Paste your bot token here
+1. Replitプロジェクトで "Tools" サイドバーを開く
+2. "Secrets" をクリック
+3. 新しいシークレットを追加：
+   - キー: `DISCORD_TOKEN`
+   - 値: コピーしたボットトークンを貼り付け
 
-### 3. Invite Bot to Your Server
+### 3. ボットをサーバーに招待
 
-1. In the Discord Developer Portal, go to "OAuth2" > "URL Generator"
-2. Select these scopes:
+1. Discord Developer Portal で "OAuth2" > "URL Generator" に移動
+2. スコープを選択：
    - `bot`
-3. Select these bot permissions:
+3. ボット権限を選択：
    - Read Messages/View Channels
    - Send Messages
    - Manage Messages
    - Read Message History
-4. Copy the generated URL and open it in your browser
-5. Select your server and authorize the bot
+4. 生成されたURLをコピーしてブラウザで開く
+5. サーバーを選択してボットを認証
 
-### 4. Run the Bot
+### 4. ボットを実行
 
-Click the "Run" button in Replit. The bot will start and connect to Discord!
+Replitの "Run" ボタンをクリック。ボットが起動してDiscordに接続します！
 
-## Available Commands
+## 利用可能なコマンド
 
-Use the prefix `!` before each command (customizable in environment variables):
+各コマンドの前にプレフィックス `!` を付けて使用します（環境変数でカスタマイズ可能）：
 
-- `!ping` - Check bot latency
-- `!help` - Show all commands
-- `!serverinfo` - Display server information
-- `!userinfo [@user]` - Show user information
-- `!clear <number>` - Delete specified number of messages (1-100)
+- `!ping` - ボットの応答速度を確認
+- `!help` - すべてのコマンドを表示
+- `!serverinfo` - サーバー情報を表示
+- `!userinfo [@user]` - ユーザー情報を表示
+- `!clear <数字>` - 指定した数のメッセージを削除（1-100）
 
-## Customization
+## カスタマイズ
 
-### Change Command Prefix
+### コマンドプレフィックスの変更
 
-Add a `PREFIX` secret in Replit Secrets with your desired prefix (default is `!`)
+Replit Secrets に `PREFIX` を追加して、お好みのプレフィックスを設定（デフォルトは `!`）
 
-### Add New Commands
+### 新しいコマンドの追加
 
-1. Create a new file in the `commands/` folder
-2. Follow this template:
+1. `main.py` にコマンド関数を追加
+2. 次のテンプレートに従ってください：
 
-```javascript
-module.exports = {
-  data: {
-    name: 'commandname',
-    description: 'Command description',
-  },
-  async execute(message, args) {
-    // Your command logic here
-    await message.reply('Response');
-  },
-};
+```python
+@bot.command(name='コマンド名')
+async def コマンド名(ctx):
+    """コマンドの説明"""
+    await ctx.send('応答内容')
 ```
 
-3. Restart the bot - your command will be automatically loaded!
+3. ボットを再起動すると、コマンドが自動的に読み込まれます！
 
-## Deployment on Replit
+## Replitでのデプロイ
 
-This bot is configured to stay online on Replit with a built-in HTTP server. The bot will automatically restart if it crashes and maintain connectivity.
+このボットは、組み込みのHTTPサーバーによりReplitでオンラインを維持するように設定されています。ボットがクラッシュしても自動的に再起動し、接続を維持します。
 
-## Support
+## GitHubへのプッシュ
 
-For issues or questions, check the [discord.js documentation](https://discord.js.org/) or Discord.js community.
+プロジェクトをGitHubにプッシュするには：
 
-## License
+1. Replitからプロジェクトをダウンロード（三点メニュー → Download as zip）
+2. ファイルを展開
+3. ターミナルでフォルダを開いて実行：
+
+```bash
+git init
+git add .
+git commit -m "Initial Discord bot setup"
+git remote add origin https://github.com/あなたのユーザー名/リポジトリ名.git
+git branch -M main
+git push -u origin main
+```
+
+## サポート
+
+問題や質問がある場合は、[discord.py ドキュメント](https://discordpy.readthedocs.io/) をご確認ください。
+
+## ライセンス
 
 ISC
